@@ -6,3 +6,4 @@ npm i body-parser
 sudo npm install -g nodemon
 nodemon server.js
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status
+npm i dotenv
