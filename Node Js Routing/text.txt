@@ -1,0 +1,8 @@
+npm i express
+npm i mongoose
+node server.js (runs the Node.js application)
+https://mongoosejs.com/  
+npm i body-parser
+sudo npm install -g nodemon
+nodemon server.js
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status

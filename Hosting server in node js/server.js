@@ -12,9 +12,8 @@ const PORT = process.env.PORT || 3000;
 // const MenuItem = require('./models/MenuItem');  // MenuItem Mongoose models
 
 app.get('/', function (req, res) {
-    res.send('welcome to our hotel');
+    res.send('Welcome to our hotel');
 })
-
 
 // POST route to add a person [Callback version]
 // app.post('/person', (req, res) => {

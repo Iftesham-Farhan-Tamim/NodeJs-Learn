@@ -1,109 +1,125 @@
-// console.log('server file is running');  // server file is running
+const express = require('express');
+const app = express();
+const db = require('./db');  // MongoDB Connection
 
-// ............................................................................................
+const bodyParser = require('body-parser');
 
-// function add(a, b) {
-//     return a + b;
-// }
+app.use(bodyParser.json());  // req body
 
-// var result = add(2, 7);
-// console.log(result);  // 5
+// const Person = require('./models/Person');  // Person Mongoose models
+// const MenuItem = require('./models/MenuItem');  // MenuItem Mongoose models
 
-// ............................................................................................
+app.get('/', function (req, res) {
+    res.send('welcome to our hotel');
+})
 
-// var add = function(a, b) {
-//     return a + b;
-// }
 
-// var result = add(2, 8);
-// console.log(result);
+// POST route to add a person [Callback version]
+// app.post('/person', (req, res) => {
+//     const data = req.body  // Assuming the request body contains the person data
 
-// ............................................................................................
+//     // Create a new Person document using the Mongoose model
+//     const newPerson = new Person(data);
 
-// var add = (a, b) => {return a + b}
-
-// var add = (a, b) => a + b;
-
-// var result = add(124, 8);
-// console.log(result);
-
-// ............................................................................................
-
-// (function() {
-//     console.log('tamim is added');
-// })();
-
-// ............................................................................................
-
-// function callback() {
-//     console.log('tamim is calling a callback');
-// }
-
-// const add = function(a, b, callback) {
-//     var result = a + b;
-//     console.log('result: ' + result);
-//     callback();
-// }
-
-// add(3, 4, callback);
-
-// ............................................................................................
-
-// const add = function(a, b, tamim) {
-//     var result = a + b;
-//     console.log('result: ' + result);
-//     tamim();
-// }
-
-// add(2, 3, function() {
-//     console.log('add completed');
+//     // Save the new person to the database
+//     newPerson.save((error, savedPerson) => {
+//         if(error) {
+//             console.log('Error saving person:', error);
+//             res.status(500).json({error: 'Internal server error'});
+//         } else {
+//             console.log('data saved successfully');
+//             res.status(200).json(savedPerson);
+//         }
+//     })
 // })
 
-// ............................................................................................
 
-// const add = function(a, b, tamim) {
-//     var result = a + b;
-//     console.log('result: ' + result);
-//     tamim();
-// }
+// This is the Best Practice / Industry Standard [Async/Await version]
+// POST method to get the person
+// app.post('/person', async (req, res) => {
+//     try {
+//         const data = req.body
 
-// add(2, 3, () => console.log('add completed'));
+//         // Create a new person document using the Mongoose model
+//         const newPerson = new Person(data);
 
-// ............................................................................................
-
-// var fs = require('fs');
-// var os = require('os');
-
-// var user = os.userInfo();
-// console.log(user);
-// console.log(user.username);
-
-// fs.appendFile('greeting.txt', 'Hi ' + user.username + '!\n', ()=> {
-//     console.log('file is created');
+//         // Save the new person to the database
+//         const response = await newPerson.save();
+//         console.log('data saved');
+//         res.status(200).json(response);
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
 // })
 
-// console.log(fs);
-// console.log(os);
 
-// ............................................................................................
+// GET method to get the person
+// app.get('/person', async (req, res) => {
+//     try {
+//         const data = await Person.find();
+//         console.log('data fetched');
+//         res.status(200).json(data);
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).json({ error: 'Internal Server error' });
+//     }
+// })
 
-// const notes = require('./notes.js');
-// console.log('server file is available');
 
-// var age = notes.age;
-// var result = notes.addNumber(age+18, 10);
-// console.log(age);
-// console.log('result is now ' + result);
+// app.get('/person/:workType', async (req, res) => {  // workType is a variable
+//     try {
+//         const workType = req.params.workType;  // Extract the work type from the URL parameter
+//         if (workType == 'chef' || workType == 'manager' || workType == 'waiter') {
+//             const response = await Person.find({ work: workType });
+//             console.log('response fetched');
+//             res.status(200).json(response);
+//         } else {
+//             res.status(404).json({ error: 'Invalid work type' });
+//         }
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).json({ error: 'Internal server error' });
+//     }
+// })
 
-// ............................................................................................
 
-var _= require("lodash");
+// POST Method to add a Menu Item
+// app.post('/menu', async (req, res) => {
+//     try {
+//         const data = req.body;
+//         const newMenu = new MenuItem(data);
+//         const response = await newMenu.save();
+//         console.log('data saved');
+//         res.status(200).json(response);
+//     } catch {
+//         console.log(err);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// })
 
-var data = ['person', 'person', 1, 2, 1, 2, 'name', 'age', '2'];
-var filter = _.uniq(data);
-console.log(filter);
 
-console.log(_.isString('tamim'));  // true
-console.log(_.isString(3));  // false
-console.log(_.isString(false));  // false
-console.log(_.isString(true));  // false
+// // Get Method to get the Menu Item
+// app.get('/menu', async (req, res) => {
+//     try {
+//         const data = await MenuItem.find();
+//         console.log('data fetched');
+//         res.status(200).json(data);
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// })
+
+
+// import the router files
+const personRoutes = require('./routes/personRoutes');
+const menuItemRoutes = require('./routes/menuItemRoutes');
+
+// use the routers
+app.use('/person', personRoutes);
+app.use('/menu', menuItemRoutes);
+
+app.listen(3000, () => {
+    console.log('listening on port 3000');
+})
