@@ -9,3 +9,4 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status
 npm install passport passport-local
 npm i dotenv
 npm i bcrypt --save
+npm i jsonwebtoken
