@@ -64,12 +64,12 @@ personSchema.pre('save', async function (next) {
     }
 })
 
-personSchema.methods.comparePassword = async function(candidatePassword) {
+personSchema.methods.comparePassword = async function (candidatePassword) {
     try {
         // use bcrypt to compair the provided password with the hashed password
         const isMatch = await bcrypt.compare(candidatePassword, this.password);
         return isMatch;
-    } catch(err) {
+    } catch (err) {
         throw err;
     }
 }
